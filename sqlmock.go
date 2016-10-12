@@ -22,6 +22,9 @@ import (
 // and test real database behavior.
 type Sqlmock interface {
 
+	// DSN returns the DSN of this mock
+	DSN() string
+
 	// ExpectClose queues an expectation for this database
 	// action to be triggered. the *ExpectedClose allows
 	// to mock database response
@@ -451,4 +454,9 @@ func (c *sqlmock) Rollback() error {
 	expected.triggered = true
 	expected.Unlock()
 	return expected.err
+}
+
+// DSN returns the DSN of this mock
+func (c *sqlmock) DSN() string {
+	return c.dsn
 }
